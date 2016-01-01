@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+killed = 0
 def doMic():
         import serial
         import time
@@ -13,6 +14,10 @@ def doMic():
                 data.strip("\n")
                 data.strip("")
                 data.strip(None)
-                STREAM.add_value(int(data))i
+                print "Mic: "+data
+                data = int(data)
+                if data < 50:
+                    data = 45
+                STREAM.add_value(int(data))
                 if killed:
                         break

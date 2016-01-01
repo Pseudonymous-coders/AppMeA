@@ -3,6 +3,7 @@ from m2x.client import M2XClient
 from threading import Thread
 from getDui import doMic
 from checkActive import isActive
+from math import fabs
 
 killed = 0
 APIKEY = "a3e04dc4b17ecb6574b7ae8c9198b3af" 
@@ -20,17 +21,16 @@ def wasRestless():
                 restless = 0
                 for x in range(15):
                         vals = accel.get()
-                        if vals[0] > 300:
+                        if fabs(vals[0]) > 150:
                                 restless += 1
-                        if vals[1] > 300:
+                        if fabs(vals[1]) > 150:
                                 restless += 1
-                        if vals[2] > 300:
+                        if fabs(vals[2]) > 150:
                                 restless += 1
                         time.sleep(1)
                 if restless > 4:
-                        stream.add_value(1)
-                else:
-                        stream.add_value(0)
+                        print "Movement: "+str(restless)
+                        stream.add_value(restless)
                 if killed:
                         break
 running = 0
