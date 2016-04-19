@@ -37,7 +37,7 @@ Pick up bed movements from the user moving around
 Pick up breath count
                               
                                 ----------------------------------------------------
-                                |                                                  |
+                                |                   HACKDFW2016                    |
                                 |     Runner up for AT&T M2X Innovation award      |
                                 |                                                  |
                                 ----------------------------------------------------
