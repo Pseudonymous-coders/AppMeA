@@ -35,8 +35,8 @@ Pick up bed movements from the user moving around
 
 ### Microphone
 Pick up breath count
-----------------------------------------------------
-|                                                  |
-|     Runner up for AT&T M2X Innovation award      |
-|                                                  |
-----------------------------------------------------
+                                ----------------------------------------------------
+                                |                                                  |
+                                |     Runner up for AT&T M2X Innovation award      |
+                                |                                                  |
+                                ----------------------------------------------------
