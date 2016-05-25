@@ -3,7 +3,7 @@
 //     Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
 //------------------------------------------------------------------------------
-
+//typedef std::wstring     string_t;
 #pragma once
 
 #include "stdafx.h"
@@ -16,6 +16,7 @@
 #include "opencv2/imgproc/imgproc.hpp"
 
 
+
 //Printable imports
 #include <iostream>
 #include <stdio.h>
@@ -24,14 +25,115 @@
 //Temp sleep
 #include <conio.h>
 #include <windows.h>
+#include "curl\curl.h"
 
+/*
+Simple udp client
+Silver Moon (m00n.silv3r@gmail.com)
+*/
+#include<stdio.h>
+#include<winsock2.h>
 
+#include<cpprest\http_client.h>
+#include<cpprest\filestream.h>
+
+#include "happyhttp.h"
+
+#pragma comment(lib,"ws2_32.lib") //Winsock Library
+
+#define SERVER "192.168.43.201"  //ip address of udp server
+
+#define PORT 890   //The port on which to listen for incoming data
+
+//CURL* curl;
 //Preprocess namespacing
 using namespace cv;
 using namespace std;
+using namespace utility;                    // Common utilities like string conversions
+using namespace web;                        // Common features like URIs.
+using namespace web::http;                  // Common HTTP functionality
+using namespace web::http::client;          // HTTP client features
+using namespace concurrency::streams;       // Asynchronous streams
 
-
+struct sockaddr_in si_other;
+int s, slen = sizeof(si_other);
+char buf[BUFLEN];
+char message[BUFLEN];
+WSADATA wsa;
 Mat backgroundImage;
+/*
+void onBegin(const happyhttp::Response* response, void* userdata)
+{
+	OutputDebugString(L"Got response!");
+}
+
+void onMiddle(const happyhttp::Response* r, void* userdata, const unsigned char* data, int n)
+{
+	OutputDebugString(L"Should process now!");
+}
+
+void onEnd(const happyhttp::Response* r, void* userdata)
+{
+	OutputDebugString(L"Ended response!");
+}
+
+// Builds an HTTP request that uses custom header values.
+pplx::task_status HTTPRequestCustomHeadersAsync(int useless)
+{
+	http_client client(U("http://api-m2x.att.com/v2/devices/72d48c4b1b7c8999cd5b4128a1337ae4/streams/activate/values"));
+
+	// Manually build up an HTTP request with header and request URI.
+	http_request request(methods::GET);
+	request.headers().add(L"X-M2X-KEY", L"a3e04dc4b17ecb6574b7ae8c9198b3af");
+	//request.set_request_uri(L"");
+	//request.headers().content_type = "application/json";
+
+	return client.request(request).then([](http_response response)
+	{
+			if (response.status_code() == status_codes::OK)
+			{
+				return response.extract_json();
+			}
+			return pplx::task_from_result(json::value());
+		})
+			.then([](pplx::task<json::value> previousTask)
+		{
+			try
+			{
+				json::value value = previousTask.get();
+				if (value.as_double() == 0.0)
+					OutputDebugString(L"NOOOTTOT");
+				else
+					OutputDebugString(L"YESSSSS");
+			}
+			catch (http_exception const & e)
+			{
+				wcout << e.what() << endl;
+			}
+			pplx::task_status status = pplx::task_status::completed;
+			return status;
+		})
+			.wait();
+		/*
+		status_code code = response.status_code();
+		std::wstring strCode  = to_wstring(code);
+		OutputDebugString(strCode.c_str());
+		web::json::value jSon = response.extract_json(true);
+		web::json::value jValue = jSon.get();
+		web::json::value value = jValue.get(L"values").get(L"value");
+		web::json::number numVal = value.as_number();
+		double doubleVal = numVal.to_double();
+		if (doubleVal == 0.0)
+			OutputDebugString(L"Yess!");
+		else
+			OutputDebugString(L"NOOOOO!");
+			*/
+
+	/* Sample output:
+	Server returned returned status code 200.
+	*//*
+}
+*/
 /// <summary>
 /// Entry point for the application
 /// </summary>
@@ -79,6 +181,65 @@ CColorBasics::CColorBasics() :
 
     // create heap storage for color pixel data in RGBX format
     m_pColorRGBX = new RGBQUAD[cColorWidth * cColorHeight];
+	/*
+	http_client client(U("http://api-m2x.att.com/v2/devices/72d48c4b1b7c8999cd5b4128a1337ae4/streams/kin/value/"));
+
+	http_request requester;
+	utility::string_t key = L"X-M2X-KEY";
+	requester.set_method(methods::PUT);
+	requester.headers().begin();
+	requester.headers().set_content_type(U("application/json"));
+	requester.headers().add(key, "a3e04dc4b17ecb6574b7ae8c9198b3af");
+	requester.headers().end();
+	requester.set_body("{ \"value\": \"0.99\" }");
+	client.request(requester);
+	/*
+	std::string requestSent = utility::conversions::to_utf8string(requester.to_string());
+	OutputDebugStringA(requestSent.c_str());
+	http_response response;
+	
+	status_code status = response.status_code();
+	reason_phrase reason = response.reason_phrase();
+	OutputDebugString(reason.c_str());
+	
+	//response.status_code();
+	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+	{
+		printf("Failed. Error Code : %d", WSAGetLastError());
+		int x = WSAGetLastError();
+		wchar_t buffer[256];
+		wsprintfW(buffer, L"%d", x);
+		OutputDebugString(L"SOCKERROR: \n");
+		OutputDebugString(buffer);
+		OutputDebugString(L"\n");
+		exit(EXIT_FAILURE);
+	}
+	if ((s = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == SOCKET_ERROR)
+	{
+		printf("socket() failed with error code : %d", WSAGetLastError());
+		OutputDebugString(L"Failed to create socket!");
+		exit(EXIT_FAILURE);
+	}
+	memset((char *)&si_other, 0, sizeof(si_other));
+	si_other.sin_family = AF_INET;
+	si_other.sin_port = htons(PORT);
+	si_other.sin_addr.S_un.S_addr = inet_addr(SERVER);
+
+
+	std::string message = std::to_string(0);
+	if (sendto(s, message.c_str(), strlen(message.c_str()), 0, (struct sockaddr *) &si_other, slen) == SOCKET_ERROR)
+	{
+		printf("sendto() failed with error code : %d", WSAGetLastError());
+		int x = WSAGetLastError();
+		wchar_t buffer[256];
+		wsprintfW(buffer, L"%d", x);
+		OutputDebugString(L"ERROR: \n");
+		OutputDebugString(buffer);
+		OutputDebugString(L"\n");
+		//exit(EXIT_FAILURE);
+	}
+	*/
+	//curl = curl_easy_init();
 }
   
 
@@ -111,7 +272,10 @@ CColorBasics::~CColorBasics()
     {
         m_pKinectSensor->Close();
     }
+	closesocket(s);
+	WSACleanup();
 
+	//curl_easy_cleanup(curl);
     SafeRelease(m_pKinectSensor);
 }
 
@@ -423,7 +587,9 @@ void CColorBasics::ProcessColor(INT64 nTime, RGBQUAD* pBuffer, int nWidth, int n
     // Make sure we've received valid data
     if (pBuffer && (nWidth == cColorWidth) && (nHeight == cColorHeight))
     {
+		
 		counter++;
+		averageCounter++;
 		GetSystemTime(&sysTime);
 		elapsedTime += sysTime.wSecond - elapsedTime;
 		Mat ColorImage(nHeight, nWidth, CV_8UC4, pBuffer);
@@ -446,6 +612,47 @@ void CColorBasics::ProcessColor(INT64 nTime, RGBQUAD* pBuffer, int nWidth, int n
 			counter = 0;
 		}
 
+		if (averageCounter >= 120)
+		{
+			calcAverage = calcSum / 120;
+			std::string message = std::to_string(calcAverage);
+
+			http_client clientRepeat(U("http://api-m2x.att.com/v2/devices/72d48c4b1b7c8999cd5b4128a1337ae4/streams/kin/value"));
+			//http_client clientRepeat(U("http://api-m2x.att.com/v2/devices/72d48c4b1b7c8999cd5b4128a1337ae4/streams/sleepiness/value"));
+
+			http_request requester;
+			utility::string_t key = L"X-M2X-KEY";
+			requester.set_method(methods::PUT);
+			requester.headers().begin();
+			requester.headers().set_content_type(U("application/json"));
+			requester.headers().add(key, "a3e04dc4b17ecb6574b7ae8c9198b3af");
+			requester.headers().end();
+			std::string body = std::string("{ \"value\": \"");
+			std::string body2 = std::to_string(calcAverage);
+			std::string body3 = std::string("\" }");
+			std::string finalbody = body + body2 + body3;
+			std::vector<char> writable(finalbody.begin(), finalbody.end());
+			writable.push_back('\0');
+			requester.set_body(&writable[0]);
+			/*
+			if (calcAverage >= 8)
+				requester.set_body("{ \"value\": \"1\" }");
+			else
+				requester.set_body("{ \"value\": \"0\" }");
+				*/
+			//OutputDebugString(L"Filler");
+			clientRepeat.request(requester);
+			//std::string requestSent = utility::conversions::to_utf8string(requester.to_string());
+			//OutputDebugStringA(requestSent.c_str());
+			//http_response response;
+
+			//status_code status = response.status_code();
+			//reason_phrase reason = response.reason_phrase();
+			//OutputDebugString(reason.c_str());
+			averageCounter = 0;
+			calcSum = 0;
+		}
+
 		absdiff(backgroundImage, grey, change);
 		threshold(change, thresh, 25, 255, THRESH_BINARY);
 		dilate(thresh, thresh, NULL);
@@ -453,9 +660,9 @@ void CColorBasics::ProcessColor(INT64 nTime, RGBQUAD* pBuffer, int nWidth, int n
 		intensity = mean(thresh);		
 		int a = intensity.val[0];
 		wchar_t buffer[256];
-		wsprintfW(buffer, L"%d", a);
-		OutputDebugString(buffer);
-		OutputDebugString(L"\n");
+		wsprintfW(buffer, L"%.2f", calcAverage);
+		calcSum += a;
+		//averageArray[averageCounter] = a;
 		imshow("ColorImage", thresh);
 			// Draw the data with OpenCV
 			////imshow("ColorImage", ColorImage);

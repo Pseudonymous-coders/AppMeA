@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColorBasics.cpp" />
+    <ClCompile Include="happyhttp.cpp" />
     <ClCompile Include="ImageRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -30,9 +31,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ColorBasics.h" />
+    <ClInclude Include="happyhttp.h" />
     <ClInclude Include="ImageRenderer.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{25D068F1-4D71-4EC2-BA78-8F6C694101A5}</ProjectGuid>
@@ -84,13 +87,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(KINECTSDK20_DIR)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(KINECTSDK20_DIR)\lib\x64;$(LibraryPath);$(OPENCV_DIR)\lib</LibraryPath>
+    <IncludePath>C:\Users\Usaid\Downloads\curl-7.48.0\curl-7.48.0\builds\libcurl-vc-x86-release-static-ipv6-sspi-winssl\include;$(KINECTSDK20_DIR)\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Usaid\Downloads\curl-7.48.0\curl-7.48.0\builds\libcurl-vc-x86-release-static-ipv6-sspi-winssl\lib;$(KINECTSDK20_DIR)\lib\x64;$(LibraryPath);$(OPENCV_DIR)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(KINECTSDK20_DIR)\inc;$(IncludePath)</IncludePath>
-    <LibraryPath>$(KINECTSDK20_DIR)\lib\x86;$(LibraryPath);$(OPENCV_DIR)\lib</LibraryPath>
+    <IncludePath>C:\Users\Usaid\Downloads\curl-7.48.0\curl-7.48.0\builds\libcurl-vc-x86-release-static-ipv6-sspi-winssl\include;$(KINECTSDK20_DIR)\inc;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Usaid\Downloads\curl-7.48.0\curl-7.48.0\builds\libcurl-vc-x86-release-static-ipv6-sspi-winssl\lib;$(KINECTSDK20_DIR)\lib\x86;$(LibraryPath);$(OPENCV_DIR)\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -106,32 +109,32 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\opencv\build\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Usaid\Downloads\curl-7.48.0\curl-7.48.0\builds\libcurl-vc-x86-release-static-ipv6-sspi-winssl\include;C:\opencv\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>kinect20.lib;kernel32.lib;user32.lib;opencv_world310d.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\opencv\build\x64\vc12\lib;C:\opencv\build\x64\vc12\bin</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_a.lib;ws2_32.lib;winmm.lib;wldap32.lib;kinect20.lib;kernel32.lib;user32.lib;opencv_world310d.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\opencv\build\x64\vc12\lib;C:\opencv\build\x64\vc12\bin;C:\Users\Usaid\Downloads\curl-7.48.0\curl-7.48.0\builds\libcurl-vc-x86-release-static-ipv6-sspi-winssl\bin</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\opencv\build\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CURL_STATICLIB;WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Usaid\Downloads\curl-7.48.0\curl-7.48.0\builds\libcurl-vc-x86-release-static-ipv6-sspi-winssl\include;C:\opencv\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EntryPointSymbol>
       </EntryPointSymbol>
-      <AdditionalDependencies>kinect20.lib;kernel32.lib;user32.lib;opencv_world310d.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\opencv\build\x64\vc12\lib;C:\opencv\build\x64\vc12\bin</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_a.lib;ws2_32.lib;winmm.lib;wldap32.lib;kinect20.lib;kernel32.lib;user32.lib;opencv_world310d.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\opencv\build\x64\vc12\lib;C:\opencv\build\x64\vc12\bin;C:\Users\Usaid\Downloads\curl-7.48.0\curl-7.48.0\builds\libcurl-vc-x86-release-static-ipv6-sspi-winssl\bin</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -176,5 +179,24 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets')" />
+    <Import Project="packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winapp.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winphone.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winphonesl.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v120.winxp.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.winapp.msvcstl.dyn.rt-dyn.targets'))" />
+    <Error Condition="!Exists('packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
+  </Target>
 </Project>

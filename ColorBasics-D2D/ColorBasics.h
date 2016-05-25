@@ -8,6 +8,7 @@
 
 #include "resource.h"
 #include "ImageRenderer.h"
+#define BUFLEN 512  //Max length of buffer
 
 class CColorBasics
 {
@@ -57,7 +58,20 @@ private:
 	SYSTEMTIME sysTime;
 	WORD elapsedTime;
 	int counter;
+	int averageCounter = 0;
+	int averageArray[120];//Must be averageCounter limit
+	double toSend = 0.0;
+	int sum = 0;
+	int calcSum = 0;
+	double calcAverage = 0.0;
 
+	
+
+	
+
+
+	//std::string initialRequest = "curl - i - X PUT http ://api-m2x.att.com/v2/devices/72d48c4b1b7c8999cd5b4128a1337ae4/streams/kinect/value -H \"X-M2X-KEY: a3e04dc4b17ecb6574b7ae8c9198b3af\" -H \"Content-Type: application/json\" -d \"{ \"value\": \"";
+	//std::string endRequest = "\" }\"";
     HWND                    m_hWnd;
     INT64                   m_nStartTime;
     INT64                   m_nLastCounter;
